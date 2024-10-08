@@ -44,3 +44,11 @@ let rec div x y =
 (* FALTAN ALGUNAS COSAS DE LA CLASE DEL 07/10 *)
 
 
+let rec fib n = (* n >= 1 *)
+  if n <= 2 then 1
+  else fib (n-1) + fib (n-2);;
+  
+let crono f x =
+  let t = Sys.time () in
+  let _ = f x in
+  Sys.time () -. t;;
