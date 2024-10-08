@@ -1,3 +1,3 @@
-# Paradigmas de la Programación - OCaml
+# Practicas-PP
 
-Pablo Portas López - <pablo.portas@udc.es>
+Prácticas de Paradigmas de la Programación en OCaml
