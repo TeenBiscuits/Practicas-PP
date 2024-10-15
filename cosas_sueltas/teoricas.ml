@@ -116,3 +116,88 @@ List.length l2;; (* 50000000 *)
 lenght l2;; (* Stack Overflow *)
 
 List.init 26 (function n -> char_of_int (65+n));; (* El abecedario completo *)
+
+(* CLASES DEL 15/10 *)
+
+let rec last l =
+  if List.tl l = [] then List.hd l
+  else last (List.tl l)
+;;
+
+let rec last l =
+  if List.length l = 1 then List.hd l
+  else last (List.tl l)
+;;
+
+(*
+<e1> : t
+<e2> : t list
+-------------------
+<e1>::<e2> : t list
+*)
+
+(* Constructor de listas *)
+
+3 :: 7 :: 9 :: [];; (* [3; 7; 9] *)
+
+let hd = function
+  [] -> 2/0 
+| h::_ -> h
+;;
+
+let hd = function h::t -> h;;
+
+let hd = function h::_ -> h;;
+
+let hd (h::_) = h;;
+
+let hd = function
+  [] -> raise (Failure "hd")
+| h::_ -> h
+;;
+
+(* CREAR UNA VERSIÓN TERMINAL DE LA SIGUIENTE FUNCIÓN *)
+
+let rec lenght = function
+  [] -> 0 
+| _::t -> 1 + lenght t
+;;
+
+
+(* Existe el elemento x en la lista l *)
+(*              mem x l;;             *)
+
+let rec mem x = function
+  [] -> false
+| h::t -> x = h || mem x t
+(* Esto es lo mismo que escribir lo siguente *)
+(* | l -> x = List.hd l || mem x (List.tl l) *)
+;;
+
+(* mem 3 [1;2;3]      1::2::3::[] *)
+(* mem 3 [2;3]           2::3::[] *)
+(* mem 3 [3]                3::[] *) (* x = h TRUE*)
+
+(* mem 3 [4;5;6]      4::5::6::[] *)
+(* mem 3 [5;6]           5::6::[] *)
+(* mem 3 [6]                6::[] *)
+(* mem 3 [1;2;3]      1::2::3::[] *)
+(* mem 3 [2;3]           2::3::[] *)
+(* mem 3 []                    [] *) (* [] -> FALSE *)
+
+
+(* REIMPLEMENTAMOS List.find *)
+
+let rec find p = function
+  [] -> raise Not_found
+| h::t -> if p h then h else find p t
+;;
+
+(* REIMPLEMENTAMOS List.filter *)
+
+let rec filter p = function
+  [] -> []
+| h::t -> 
+  if p h then h :: filter p t
+  else filter p t
+;;
