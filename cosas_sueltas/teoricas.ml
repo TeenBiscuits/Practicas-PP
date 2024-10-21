@@ -201,3 +201,37 @@ let rec filter p = function
   if p h then h :: filter p t
   else filter p t
 ;;
+
+
+(* Clase del 21/10 *)
+
+(* Reimplementación de lenght *)
+
+let rec aux = function
+  (n,[]) -> n
+| (n, _::t) -> aux(n+1,t)
+;;
+
+let lenght l =
+  aux (0,l)
+;;
+
+let lenght l =
+  let rec aux = function
+    (n,[]) -> n
+  | (n, _::t) -> aux(n+1,t)
+  in 
+    aux (0,l)
+;;
+
+
+let rec append = function
+    [] -> (function  l -> l)
+  | h::t -> (function l -> h :: append t l)
+;;
+
+let rec append l1 l2 =
+  match l1 with
+  [] -> l2
+  | h::t -> h :: append t l2
+;;
