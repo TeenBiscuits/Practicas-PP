@@ -235,3 +235,81 @@ let rec append l1 l2 =
   [] -> l2
   | h::t -> h :: append t l2
 ;;
+
+(* CLASE 22/10 *)
+
+let compare_lengs l1 l2 =
+  compare (List.length l1) (List.length l2)
+;;
+
+
+let rec compare_lengs = function
+  [] -> (function [] -> 0
+                | _  -> -1)
+| _::t1 -> (function [] -> 1
+                | _::t2 -> compare_lengs t1 t2)
+;;
+let rec compare_lengs l1 l2 =
+  match (l1, l2) with
+    ([], []) -> 0
+  | ([], _) -> -1
+  | (_, []) -> 1
+  | (_::t1, _::t2) -> compare_lengs t1 t2
+;;
+
+let rec fact = function
+    0 -> 1
+  | n -> n * fact (n-1)
+;;
+
+(* Versión terminal del factorial *)
+
+(* El acumulador n va guardando los valores de las multiplicaciones *)
+(*
+aux 0 1
+aux 1 1
+aux 2 2
+aux 3 6
+aux 4 24
+aux 5 120
+120
+*)
+let fact n =
+  let rec aux acc = function
+    0 -> acc
+  | i -> aux (i*acc) (i-1)
+  in
+    aux 1 n
+;;
+
+(* El único defecto de la función anterior es que en cada repetición se redefine aux *)
+(* Si el compilador no es lo suficientemente inteligente *)
+
+
+(*Esta función es parcialmente incorrecta *)
+let fact n =
+  let rec aux i fi =
+    if i = n then fi
+    else aux (i+1) ((i+1)*fi)
+  in
+    aux 0 1
+;;
+
+List.fold_left (+) 0 [1;2;3;4;5] (* 15 *)
+
+let lenght l =
+  List.fold_left (function a -> function _ -> a+1) 0 l
+;;
+
+let rec fold_left a = function
+  [] -> a
+| h::t -> fold_left f (f a h) t
+;;
+
+let rev l =
+  List.fold_left (function a -> function x -> x::a) [] l
+;;
+
+(* Dado una lista devolver el máximo *)
+(* lmax / también existe la función max en ocaml *)
+(* soltar error cuando se envie una lista vacía *)
