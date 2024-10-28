@@ -313,3 +313,90 @@ let rev l =
 (* Dado una lista devolver el máximo *)
 (* lmax / también existe la función max en ocaml *)
 (* soltar error cuando se envie una lista vacía *)
+
+
+(* CLASES 28/10 *)
+
+let rec lmax = function
+  h::[] -> h
+| h::t ->
+      if h >= lmax t then h else lmax t
+;;
+
+let rec lmax = function
+  h::[] -> h
+| h::t -> max h (lmax t)
+;;
+
+let lmax (h::t) =
+  let rec aux m = function
+    [] -> m
+    | h::t -> aux (max h m) t
+  in
+    aux h t
+;;
+
+let rec lmax = function
+  h::[] -> h
+| h1::h2::t -> lmax (max h1 h2::t)
+;;
+
+let rec append l1 l2 =
+  match l1 with
+    [] -> l2
+  | h::t -> h :: append t l2
+;;
+
+let rec rev_append l1 l2 =
+  match l1 with
+    [] -> l2
+  | h::t -> rev_append t (h::l2)
+;;
+
+let append' l1 l2 =
+  List.rev_append (List.rev l1) l2
+;;
+
+let rev l =
+  List.rev_append l []
+;;
+
+let rev l =
+  List.fold_left 
+    (function a -> function x -> x::a) [] l
+;;
+
+(* ESTA ES LA UTILIDAD DE FUN *)
+let rev l =
+  List.fold_left 
+    (fun a x -> x::a) [] l
+;;
+
+
+(* MUY MALA IMPLEMENTACIÓN DE REV LIST*)
+let rec rev = function
+    [] -> []
+  | h::t -> (rev t) @ [h]
+;;
+
+(*
+rev [1;2;3;4]
+(rev [2;3;4]) @ [1]
+(rev [3;4] @ [2]) @ [1]
+((rev [4] @ [3]) @ [2]) @ [1]
+(((rev [] @ [4]) @ [3]) @ [2]) @ [1]
+((([] @ [4]) @ [3]) @ [2]) @ [1]
+(([4] @ [3]) @ [2]) @ [1]
+([4;3] @ [2]) @ [1]
+[4;3;2] @ [1]
+[4;3;2;1]
+*)
+
+let rec for_all p = function
+    [] -> true
+  | h::t -> p h && for_all p t
+;;
+
+let for_all p l =
+  List.fold_left (fun a x -> p x && a) true l
+;;
