@@ -301,10 +301,12 @@ let lenght l =
   List.fold_left (function a -> function _ -> a+1) 0 l
 ;;
 
+(*
 let rec fold_left a = function
   [] -> a
 | h::t -> fold_left f (f a h) t
 ;;
+*)
 
 let rev l =
   List.fold_left (function a -> function x -> x::a) [] l
@@ -399,4 +401,61 @@ let rec for_all p = function
 
 let for_all p l =
   List.fold_left (fun a x -> p x && a) true l
+;;
+
+
+(* CLASES 29/10 *)
+
+let rec sorted = function
+  h1::h2::t -> h1 <= h2 && sorted (h2::t)
+| _ -> true
+;;
+
+(*if h1 <= h2 then sorted (h2::t) else then*)
+
+let rec insert x = function
+  [] -> [x]
+| h::t ->
+    if x <= h then x::h::t
+    else h :: insert x t
+;;
+
+(* Versión terminal *)
+let insert' x l =
+  let rec aux (before, after) =
+    match after with
+      [] -> List.rev (x::before)
+    | h::t ->
+      if x <= h then List.rev_append before (x::after)
+      else aux (h::before, t)
+
+  in
+    aux ([], l)
+;; 
+
+let rec i_sort = function
+  []-> []
+| h::t -> insert' h (i_sort t)
+;;
+
+(* Versión terminal *)
+let i_sort' l =
+  let rec aux sorted = function
+      [] -> sorted
+    | h::t -> aux (insert' h sorted) t
+  in
+    aux [] l
+;;
+
+let l1 = List.init 10_000 (function _ -> Random.int 1_000_000);;
+
+let l2 = List.init 300_000 (function _ -> Random.int 1_000_000);;
+
+let l3 = List.init 10_000_000 (function _ -> Random.int 1_000_000);;
+
+(* Función de medir tiempos *)
+let crono f x =
+  let t = Sys.time () in
+  let _ = f x in
+  Sys.time () -. t
 ;;
