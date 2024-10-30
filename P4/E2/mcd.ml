@@ -7,6 +7,6 @@ let rec mcd a b =
 (* Versión optimizada *)
 let rec mcd' a b =
   if b = 0 then a
-  else mcd (min a b) ((max a b) mod (min a b))
+  else mcd' (min a b) ((max a b) mod (min a b))
 ;;
 
