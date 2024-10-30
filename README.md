@@ -12,7 +12,7 @@ ocamlc -c test.mli test.ml
   - [x] [expr.ml](/P1/expr.ml)
   - [x] [e.ml](/P1/e.ml)
 - [x] [P2 - Práctica 2](/P2/)
-  - [x] [frases.ml](/P2/frases.ml) (JAVIER PARIS)
+  - [x] [frases.ml](/P2/frases.ml)
 - [x] [P3 - Práctica 3](/P3/)
   - [x] [def.ml](/P3/def.ml)
   - [x] [def_a.ml](/P3/def_a.ml)
