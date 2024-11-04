@@ -553,3 +553,12 @@ let rec merge_sort l =
       fusion (merge_sort l1) (merge_sort l2)
 ;;
 
+let rlist n = 
+  List.init n (function _ -> Random.int 1_000_000)
+;;
+
+let crono f x =
+  let t = Sys.time () in
+  let _ = f x in
+  Sys.time () -. t
+;;
