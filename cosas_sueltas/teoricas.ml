@@ -459,3 +459,97 @@ let crono f x =
   let _ = f x in
   Sys.time () -. t
 ;;
+
+(* CLASES 04/11 *)
+
+(* Dado una función de ordenación "ord" y una lista *)
+let rec sorted ord = function
+  h1::h2::t -> ord h1 h2 && sorted ord (h2::t)
+| _ -> true
+;;
+
+(* sorted (>=) [9;9;8;6;0];; - : bool = true;; *)
+
+let rec sorted_g ord = function
+  h1::h2::t -> ord h1 h2 && sorted_g ord (h2::t)
+| _ -> true
+;;
+
+let rec insert x = function
+  [] -> [x]
+| h::t -> if x <= h then x::h::t
+  else h :: insert x t
+;;
+
+let rec insert_g ord x = function
+  [] -> [x]
+| h::t -> 
+    if ord x h then x::h::t
+    else h :: insert_g ord x t
+;;
+
+let rec isort = function
+  [] -> []
+| h::t -> insert h (isort t)
+;;
+
+let rec isort_g ord = function
+  [] -> []
+| h::t -> insert_g ord h (isort_g ord t)
+;;
+
+(*
+# isort_g (<=) [22; 3; 14; 0; -2; 8; 0; 7; 3; 5];;
+- : int list = [-2; 0; 0; 3; 3; 5; 7; 8; 14; 22]
+# isort_g (>=) [22; 3; 14; 0; -2; 8; 0; 7; 3; 5];; 
+- : int list = [22; 14; 8; 7; 5; 3; 3; 0; 0; -2]
+# isort_g (=) [22; 3; 14; 0; -2; 8; 0; 7; 3; 5];;  
+- : int list = [5; 3; 3; 7; 0; 0; 8; -2; 14; 22]
+*)
+
+let l = [("Luis", 8.9); ("Juana", 9.2); ("Rosa", 10.0); ("Ana", 7.5)];;
+
+(* isort_g (ord) l;; *)
+
+(<=);; (* Compara los primeros elementos y en caso de empate el segundo *)
+(* En este caso comparación de strings es orden alphavético *)
+
+fun (_, n1) (_,n2) -> n1 <= n2;; (* Ordenar por notas *)
+
+fun (s1, _) (s2, _) -> String.length s1 <= String.length s2;; (* Ordenar por tamaño de los strings *)
+
+let rec fusion l1 l2 =
+  match l1, l2 with
+  [], l | l, [] -> l
+| h1::t1, h2::t2 ->
+  if h1 <= h2
+  then h1 :: fusion t1 l2 (* h2::t2 == l2 *)
+  else h2 :: fusion l1 t2
+;;
+ 
+(*
+let rec fusion_g ord l1 l2 =
+  match l1, l2 with
+  [], l | l, [] -> l
+| h1::t1, h2::t2 ->
+  if ord h1 h2
+  then h1 :: fusion_g ord t1 l2 (* h2::t2 == l2 *)
+  else h2 :: fusion_g ord l1 t2
+;;
+*)
+
+let rec divide = function
+  h1::h2::t ->
+    let t1, t2 = divide t in
+    h1::t1, h2::t2
+  | l -> l, []
+;;
+
+let rec merge_sort l =
+  match l with
+    [] | [_] -> l
+  | _ ->
+      let l1, l2 = divide l in
+      fusion (merge_sort l1) (merge_sort l2)
+;;
+
