@@ -562,3 +562,58 @@ let crono f x =
   let _ = f x in
   Sys.time () -. t
 ;;
+
+
+(* CLASES 05/11 *)
+
+let rec divide = function
+  h1::h2::t ->
+    let l1, l2 = divide t in
+    h1::l1, h2::l2
+| l -> l, []
+;;
+
+let divide' l =
+  let rec aux acc1 acc2 = function
+    [] -> acc1, acc2 (* Una vez repartidos todos los elem. de una lista par que la lista vacía *)
+    | h::[] -> h::acc1, acc2 (*h::[] == [h]*) (* De ser una lista impar sobraría uno*)
+    | h1::h2::t ->
+      aux (h1::acc1) (h2::acc2) t (* Añadir a los acumuladores los dos primeros elementos de la lista *)
+  in
+  aux [] [] l 
+;;
+
+
+let rec fusion l1 l2 =
+  match l1, l2 with
+    [], l | l, [] -> l
+  | h1::t1, h2::t2 ->
+      if h1 <= h2
+        then h1 :: fusion t1 l2
+        else h2 :: fusion l1 t2
+;; 
+
+
+let fusion' l1 l2 =
+  let rec aux acc = function
+
+    h1::t1, h2::t2 ->
+      if h1 <= h2
+        then aux (h1::acc) (t1, h2::t2)
+        else aux (h2::acc) (h1::t1, t2)
+  in
+    aux [] (l1, l2)
+;;
+
+(*
+fusion'   134 25689
+aux []    134 25689
+aux 1     34  25689
+aux 21    34  5589
+aux 321   4   5689
+aux 4321  []  5689
+*)
+
+
+(* REALIZAR QUICK SORT DE MANERA TERMINAL NO ES RENTABLE *)
+
