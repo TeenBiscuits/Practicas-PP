@@ -617,3 +617,55 @@ aux 4321  []  5689
 
 (* REALIZAR QUICK SORT DE MANERA TERMINAL NO ES RENTABLE *)
 
+
+(* CLASES 11/11 *)
+
+(*
+
+'a option
+
+None;;
+Some 'a
+
+*)
+
+let (//) m n =
+  if n <> 0
+  then Some (m / n)
+  else None 
+;;
+
+let come (i1, j1) (i2, j2) =
+  i1 = i2 || (* misma fila *)
+  j1 = j2 || (* misma columna *)
+  abs (i1-i2) = abs (j1-j2) (* misma diagonal *)
+;;
+
+let rec compatible c = function
+  [] -> true
+| h::t -> not (come c h) && compatible c t
+;;
+
+let reinas n =
+  let rec completa camino (i, j) =
+      if i > n then Some camino         (* Salí fuera del tablero filas, es decir terminé *)
+      else if j > n then None           (* Salí fuera del tablero columnas, estado de bloqueo *)
+      else if compatible (i,j) camino   (* ¿ Es la posición encontrada válida ?  *)
+        
+        (* Si, devuelvo las demás        )
+        (  reinas y la nueva, avanzamos  )
+        (  a la siguiente fila          *)
+        
+        then
+          match completa ((i,j)::camino) (i+1, 1) with
+            None -> completa camino (i, j+1)
+          | solucion -> solucion
+        (*| Some sol -> Some sol *) 
+        
+        (* No, y continuamos a la        )
+        (  siguiente columna            *)
+        
+        else completa camino (i, j+1)
+  in
+    completa [] (1,1)
+;; 
