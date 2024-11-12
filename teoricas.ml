@@ -669,3 +669,107 @@ let reinas n =
   in
     completa [] (1,1)
 ;; 
+
+
+(*
+type exn =
+  Invalid_argument of string
+| Failure of string
+| Not_found
+| Division_by_zero
+| ...
+| Reinas
+
+exception Reinas;;
+
+raise : exn -> a'
+
+*)
+
+let tl' = function
+  [] -> []
+| _::t -> t
+;;
+
+let tl' l =
+  try List.tl l with
+    Failure _ -> []
+;;
+
+let reinas n =
+  let rec completa camino (i, j) =
+      if i > n then camino
+      else if j > n then raise Not_found (* None *)
+      else if compatible (i,j) camino
+        then
+          (* SUSTITUIMOS ESTE PATTERN MATCHING CON UN TRY WITH
+          match completa ((i,j)::camino) (i+1, 1) with
+            None -> completa camino (i, j+1)
+          | solucion -> solucion
+          *)
+          try completa ((i, j) :: camino) (i+1, 1) with 
+            Not_found -> completa camino (i, j+1)
+      else completa camino (i, j+1)
+  in
+    completa [] (1,1)
+;;
+
+(* En vez de SOME O NONE o un Not_found usamos la lista vacía *)
+let reinas n =
+  let rec completa camino (i, j) =
+      if i > n then [camino]
+      else if j > n then []
+      else if compatible (i,j) camino
+        then
+          match completa ((i, j) :: camino) (i+1, 1) with 
+            [] -> completa camino (i, j+1)
+          | sol -> sol
+      else completa camino (i, j+1)
+  in
+    completa [] (1,1)
+;;
+
+(* TIENE MAYOR COHERENCIA INTERNA YA QUE
+# reinas 0;; - : (int * int) list list = [[]]                                 (* SOLUCIÓN: NO HACER NADA*)
+# reinas 1;; - : (int * int) list list = [[(1, 1)]]                           (* SOLUCIÓN: LA TRIVIAL *)
+# reinas 2;; - : (int * int) list list = []                                   (* NO TIENE SOLUCIÓN *)
+# reinas 3;; - : (int * int) list list = []                                   (* NO TIENE SOLUCIÓN *)
+# reinas 4;; - : (int * int) list list = [[(4, 3); (3, 1); (2, 4); (1, 2)]]   (* SOLUCIÓN *)
+*)
+
+let all_reinas n =
+  let rec completa camino (i, j) =
+      if i > n then [camino]
+      else if j > n then []
+      else if compatible (i,j) camino
+        then
+          completa ((i, j) :: camino) (i+1, 1) @ completa camino (i,j+1)
+      else completa camino (i, j+1)
+  in
+    completa [] (1,1)
+;;
+
+(* Contador de soluciones
+
+all_reinas 4;;
+- : (int * int) list list = 
+[[(4, 3); (3, 1); (2, 4); (1, 2)]; [(4, 2); (3, 4); (2, 1); (1, 3)]]
+
+all_reinas 5;;
+all_reinas 6;;
+List.length (all_reinas 8);; - : int = 92
+List.length (all_reinas 10);;
+List.lenght (all reinas 13);;
+*)
+
+let all_reinas n =
+  let rec completa camino (i, j) =
+      if i > n then 1
+      else if j > n then 0
+      else if compatible (i,j) camino
+        then
+          completa ((i, j) :: camino) (i+1, 1) + completa camino (i,j+1)
+      else completa camino (i, j+1)
+  in
+    completa [] (1,1)
+;;
