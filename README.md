@@ -45,3 +45,11 @@ ocamlc -c test.mli test.ml
 - [ ] [P8 - Folding & Listing](/P8/)
   - [ ] folding.ml (Opcional)
   - [ ] listing.ml
+- [ ] [P9 - Práctica 9](/P9/)
+  - [ ] hanoi_plus.ml
+  - [ ] tail.ml (Opcional)
+
+## Pruebas Competitivas
+
+- [ ] [PC1 - Más Hanoi](/PC1/)
+  - [ ] [hanoi_plus.ml](/PC1/hanoi_plus.ml)
