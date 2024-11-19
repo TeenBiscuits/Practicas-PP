@@ -773,3 +773,80 @@ let all_reinas n =
   in
     completa [] (1,1)
 ;;
+
+(* CLASES 18/11 *)
+
+(* ÁRBOLES *)
+
+type maybe_an_int =
+	Some of int 
+	| None
+;;
+
+let (//) x y = 
+	match x, y with 
+	Some _, Some 0 -> None
+	| Some a, Some b -> Some (a/b)
+	| _ -> None 
+;;
+
+(*Definir un tipo booleano*)
+type booleano = V | F;;
+
+(*Se utiliza con pattern matching*)
+let (&&&) b1 b2 =
+  match b1, b2 with 
+    V, V -> V
+    | _ -> F
+;;
+
+let (|||) b1 b2 = 
+  match b1, b2 with 
+  V, _ | _, V -> V        
+  | _ -> F
+;;
+
+
+type palo = 
+  Pica 
+  | Trebol 
+  | Corazon 
+  | Diamante
+;;
+
+
+type numero =
+  I of int 
+| F of float
+;;
+
+let rec (++) n1 n2 = 
+  match n1, n2 with 
+  I x, I y -> I (x + y)
+| F x, F y -> F (x +. y)
+| I x, F y -> F (float x +. y)
+| _ -> n2 ++ n1
+;;
+
+type maybe_an_int = 
+   Some of int 
+ | None
+;;
+
+(* PREGUNTAR POR ESTE ERROR *)
+type maybe_a_string
+  Somes of string 
+| Nones
+;;
+
+type 'a option 
+  Some of 'a 
+| None 
+;; 
+
+type nat = 
+  Zero 
+| Succ of nat     (Succ: sucesor)
+;;
+
+
