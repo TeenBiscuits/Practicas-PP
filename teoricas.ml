@@ -850,3 +850,75 @@ type nat =
 ;;
 
 
+
+(* CLASES 19/11 *)
+
+type nat =
+  Zero
+| Succ of nat
+;;
+
+let rec sum n1 = function
+  Zero -> n1
+| Succ n2 -> sum (Suc n1) n2
+;;
+
+let rec nat_of_int = function
+  0 -> Zero
+| n -> 
+    if n < 0 then raise (Invalid_argument "nat_of_int")
+    else Succ (nat_of_int (n-1))
+;;
+
+(* Versión con una sola comprobación y no en cada iteración *)
+
+(* VERSIÓN PROFESOR
+let rec nat_of_int n =
+  0 -> Zero
+| n -> Succ (nat_of_int (n-1))
+;;
+
+let nat_of_int n =
+  if n < 0 then raise (Invalid_argument "nat_of_int")
+  else nat_of_int n
+;;
+*)
+
+let nat_of_int n =
+  (* FUNCIÓN AUX *)
+  let rec nat_of_int n =
+      0 -> Zero
+    | n -> Succ (nat_of_int (n-1))
+  in
+
+  if n < 0 then raise (Invalid_argument "nat_of_int")
+  else nat_of_int n (* LLAMADA A AUX *)
+
+;;
+
+type 'a tree =
+  Empty
+| None of ('a * 'a tree * 'a tree)
+;;
+
+let rec num_nodes = function
+  Empty -> 0
+| Node (_, l, r) -> 1 + num_nodes l + num_nodes r
+;;
+
+let rec altura = function
+  Empty -> 0
+| Node (_, l, r) -> 1 + max (altura l) (altura r)
+;;
+
+let rec preorden = function
+  Empty -> []
+| Node (n, l, r) -> (n :: preorden l) @ (preorden r)
+;;
+
+let rec hojas = function
+  Empty -> []
+| Node (n, Empty, Empty) -> [n]
+| Node (_, l, r) -> (hojas l) @ (hojas r)
+;;
+
