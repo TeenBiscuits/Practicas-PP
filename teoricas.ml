@@ -922,3 +922,106 @@ let rec hojas = function
 | Node (_, l, r) -> (hojas l) @ (hojas r)
 ;;
 
+
+(* CLASES 25/11 *)
+
+(*
+            2
+          7   5
+
+  Node of (2)     (7)       (5)
+  Node of 'a * 'a tree * 'a tree
+*)
+
+(* Tipo de árbol de la clase pasada *)
+type 'a tree =
+  Empty
+| Node of 'a * 'a tree * 'a tree
+;;
+
+(* Tipo de árbol ESTRICTAMENTE binario, no puede haber un árbol con solo una hoja *)
+type 'a btree =
+  Leaf of 'a
+| Node of 'a * 'a btrre * 'a btree
+;;
+
+let mirror = function
+  Leaf x -> Leaf x
+| Node (x, l, r) -> Node (x, mirror r, mirror l)
+;;
+
+type 'a gtree =
+  GT of 'a * 'a gtree list
+;;
+
+let rec num_nodes = function
+  GT (_, []) -> 1
+| GT (_, l) -> 
+        List.fold_left (+) 1 (List.map num_nodes l) 
+        (* Suma todos los elementos de la lista, mas el nodo padre *)
+;;
+
+
+(* Suma todos los elementos de la lista, mas el nodo padre *)
+let rec num_nodes (GT (_, l)) = List.fold_left (+) 1 (List.map num_nodes l);;
+
+let rec num_nodes' = function 
+  GT (_, []) -> 1
+| GT (x, h::t) -> num_nodes' h + num_nodes' (GT (x, t))
+;;
+
+
+(* PARADIGMA FUNCIONAL TERMINA AQUÍ *)
+
+(* PARADIGMA IMPERATIVO *)
+
+ref;;
+(* - : 'a -> 'a ref = <fun> *)
+ref 8;;
+(* - : int ref = {contents = 8} *)
+let i = ref 0;;
+(* val i : int ref = {contents = 0} *)
+(* i + 3;; *)
+(*
+Line 1, characters 0-1:
+1 | i + 3;;
+    ^
+Error: This expression has type "int ref"
+       but an expression was expected of type "int"
+*)
+(!);;
+(* - : 'a ref -> 'a = <fun> *)
+!i;;
+(* - : int = 0 *)
+!i + 3;;
+(* - : int = 3 *)
+(:=);;
+(* - : 'a ref -> 'a -> unit = <fun> *)
+i := 5;;
+(* - : unit = () *)
+i;;
+(* - : int ref = {contents = 5} *)
+!i;;
+(* - : int = 5 *)
+
+for i = 0+1 to 4+1 do
+  print_endline (string_of_int i)
+done
+
+let fact n =
+  let f = ref 1 in
+  for i = 1 to n do
+    f := i * !f
+  done;
+  !f
+;;
+
+(* EQUIVALENCIAS DEL PUNTO Y COMA *)
+
+e1 ; e2 ;;
+
+let _ = e1 in e2
+
+e1 ; e2 ; e3 ;;
+
+let _ = e1 in let _ = e2 in e3
