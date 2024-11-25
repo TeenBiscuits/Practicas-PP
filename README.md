@@ -17,8 +17,9 @@ ocamlc -c test.mli test.ml
   - [x] [def.ml](/P3/def.ml)
   - [x] [def_a.ml](/P3/def_a.ml)
   - [x] [funciones.ml](/P3/funciones.ml)
-  - [ ] frases2.ml (Opcional)
-  - [ ] if_then_else.ml (Opcional)
+  - [x] [frases2.ml (Opcional)](/P3/frases2.ml)
+  - [x] [if_then_else.ml (Opcional)](/P3/if_then_else.ml)
+
 - [ ] [P4](/P4/)
   - [x] [E1 - La conjetura de Collatz](/P4/E1/)
     - [x] [collatz.ml](/P4/E1/collatz.ml)
@@ -39,6 +40,7 @@ ocamlc -c test.mli test.ml
     - [ ] factores_plus.ml
   - [ ] [E3 - Hanoi 😱](/P6/E3/)
     - [ ] [hanoi.ml](/P6/E3/hanoi.ml)
+
 - [ ] [P7 - Listas y Excepciones](/P7/)
   - [x] mcm_plus.ml
   - [ ] myList.ml
