@@ -1025,3 +1025,49 @@ let _ = e1 in e2
 e1 ; e2 ; e3 ;;
 
 let _ = e1 in let _ = e2 in e3
+
+let fac n =
+  let f = ref 1 and
+    i = ref 1 in
+  while !i <= n do
+    f := !f * !i;
+    i := !i + 1
+  done;
+  !f
+;;
+
+(*
+
+let _ = e1 in let _ = e2 in e3
+
+variables (ref, !, :=)
+secuencial (;)
+alternativa (if-then-else)
+bucles (while, for)
+
+*)
+
+let v = Array.init 10 (fun _ -> Random.float 1.);;
+
+let vprod v1 v2 =
+  if Array.length v1 = Array.length v2 then
+    let p = ref 0. in
+    for i = 0 to Array.length v1 do
+      p := !p + v1.(i) *. v2.(i)
+    done;
+    !p
+  else
+    raise (Invalid_argument "vprod")
+;;
+
+let vprod v1 v2 =
+  Array.fold_left (+.) 0. (Array.map2 ( *. ) v1 v2 )
+;;
+
+let m =
+  [|
+    [| 1; 2; 3 |];
+    [| 4; 5; 6 |];
+    [| 7; 8; 9; 10 |];
+  |]
+;;
