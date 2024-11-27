@@ -1,0 +1,71 @@
+val leaf : 'a -> 'a GTree.gtree = <fun>
+val t5 : int GTree.gtree = GT (5, [GT (12, [])])
+val t3 : int GTree.gtree =
+  GT (3, [GT (5, [GT (12, [])]); GT (6, []); GT (7, [])])
+val t4 : int GTree.gtree =
+  GT (4, [GT (8, []); GT (9, []); GT (10, []); GT (11, [])])
+val t2 : int GTree.gtree =
+  GT (2,
+   [GT (3, [GT (5, [GT (12, [])]); GT (6, []); GT (7, [])]);
+    GT (4, [GT (8, []); GT (9, []); GT (10, []); GT (11, [])])])
+val t1 : int GTree.gtree =
+  GT (1,
+   [GT (2,
+     [GT (3, [GT (5, [GT (12, [])]); GT (6, []); GT (7, [])]);
+      GT (4, [GT (8, []); GT (9, []); GT (10, []); GT (11, [])])])])
+- : int * int = (12, 5)
+- : int list = [1; 2; 3; 4; 5; 6; 7; 8; 9; 10; 11; 12]
+val t1' : int GTree.t =
+  GT (1,
+   [GT (2,
+     [GT (4, [GT (11, []); GT (10, []); GT (9, []); GT (8, [])]);
+      GT (3, [GT (7, []); GT (6, []); GT (5, [GT (12, [])])])])])
+- : int list = [1; 2; 4; 3; 11; 10; 9; 8; 7; 6; 5; 12]
+- : int list = [1; 2; 3; 5; 12; 6; 7; 4; 8; 9; 10; 11]
+- : int list = [12; 5; 6; 7; 3; 8; 9; 10; 11; 4; 2; 1]
+- : int list = [12; 6; 7; 8; 9; 10; 11]
+- : int list = [11; 10; 9; 8; 7; 6; 12]
+- : int = 5
+- : int = 4
+- : int option = Some 12
+- : int option = None
+- : int = 5
+- : int = 11
+- : int option = Some 12
+- : int option = None
+- : bool = true
+- : bool = false
+- : bool = false
+- : bool = true
+- : bool = false
+- : bool = true
+val t1c : char GTree.t =
+  GT ('a',
+   [GT ('b',
+     [GT ('c', [GT ('e', [GT ('l', [])]); GT ('f', []); GT ('g', [])]);
+      GT ('d', [GT ('h', []); GT ('i', []); GT ('j', []); GT ('k', [])])])])
+- : char list = ['a'; 'b'; 'c'; 'd'; 'e'; 'f'; 'g'; 'h'; 'i'; 'j'; 'k'; 'l']
+val t : int GTree.t =
+  GT (1,
+   [GT (2,
+     [GT (0, [GT (-1, [])]);
+      GT (4, [GT (8, []); GT (0, [GT (-1, [])]); GT (10, []); GT (11, [])])])])
+- : int list = [1; 2; 0; 4; -1; 8; 0; 10; 11; -1]
+- : int list = [-1; 8; -1; 10; 11]
+val ta : int GTree.t =
+  GT (1,
+   [GT (2,
+     [GT (3, []); GT (4, [GT (8, []); GT (9, []); GT (10, []); GT (11, [])])])])
+- : int list = [1; 2; 3; 4; 8; 9; 10; 11]
+val stl : 'a -> 'a StBinTree.t = <fun>
+val comb : 'a -> 'a StBinTree.t -> 'a StBinTree.t -> 'a StBinTree.t = <fun>
+val s1 : int StBinTree.t =
+  StBinTree.SBT (StBinTree.Leaf 2, 1, StBinTree.Leaf 3)
+val s4 : int StBinTree.t =
+  StBinTree.SBT (StBinTree.Leaf 5, 4, StBinTree.Leaf 6)
+val s : int StBinTree.t =
+  StBinTree.SBT (StBinTree.SBT (StBinTree.Leaf 2, 1, StBinTree.Leaf 3), 0,
+   StBinTree.SBT (StBinTree.Leaf 5, 4, StBinTree.Leaf 6))
+- : int list = [0; 1; 4; 2; 3; 5; 6]
+- : int list = [0; 1; 4; 2; 3; 5; 6]
+

@@ -1,0 +1,39 @@
+val leaf : 'a -> 'a StBinTree.t = <fun>
+val complete_tree : int -> int StBinTree.t = <fun>
+val t9 : int StBinTree.t =
+  SBT (SBT (SBT (Leaf 8, 4, Leaf 9), 2, Leaf 5), 1, SBT (Leaf 6, 3, Leaf 7))
+- : int * int = (9, 4)
+- : int list = [1; 2; 3; 4; 5; 6; 7; 8; 9]
+val t9' : int StBinTree.t =
+  SBT (SBT (Leaf 7, 3, Leaf 6), 1, SBT (Leaf 5, 2, SBT (Leaf 9, 4, Leaf 8)))
+- : int list = [1; 3; 2; 7; 6; 5; 4; 9; 8]
+- : int list = [1; 2; 4; 8; 9; 5; 3; 6; 7]
+- : int list = [8; 4; 9; 2; 5; 1; 6; 3; 7]
+- : int list = [8; 9; 4; 5; 2; 6; 7; 3; 1]
+- : int = 4
+- : int = 7
+- : bool = true
+- : bool = true
+- : bool = false
+- : bool = true
+- : int list = [8; 9; 5; 6; 7]
+- : int list = [6; 7]
+- : int list = [5; 9; 8]
+val t9b : bool StBinTree.t =
+  SBT (SBT (SBT (Leaf true, true, Leaf false), true, Leaf false), false,
+   SBT (Leaf true, false, Leaf false))
+- : bool list = [false; true; false; true; false; true; false; true; false]
+val t9c : int StBinTree.t =
+  SBT (SBT (SBT (Leaf 16, 8, Leaf 9), 4, Leaf 5), 1,
+   SBT (Leaf 12, 3, Leaf 7))
+- : int list = [1; 4; 3; 8; 5; 12; 7; 16; 9]
+val tr : int StBinTree.t = SBT (Leaf 8, 4, Leaf 9)
+- : int list = [4; 8; 9]
+val t : int StBinTree.t =
+  SBT (SBT (SBT (Leaf 8, 4, Leaf 9), 2, SBT (Leaf 8, 4, Leaf 9)), 1,
+   SBT (Leaf 8, 4, Leaf 9))
+- : int list = [1; 2; 4; 4; 4; 8; 9; 8; 9; 8; 9]
+val ta : int StBinTree.t = SBT (SBT (Leaf 4, 2, Leaf 5), 1, Leaf 3)
+- : int list = [1; 2; 3; 4; 5]
+- : bool = true
+
