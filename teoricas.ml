@@ -834,19 +834,19 @@ type maybe_an_int =
 ;;
 
 (* PREGUNTAR POR ESTE ERROR *)
-type maybe_a_string
+type maybe_a_string =
   Somes of string 
 | Nones
 ;;
 
-type 'a option 
+type 'a option =
   Some of 'a 
 | None 
 ;; 
 
 type nat = 
   Zero 
-| Succ of nat     (Succ: sucesor)
+| Succ of nat     (* Succ: sucesor *)
 ;;
 
 
@@ -860,7 +860,7 @@ type nat =
 
 let rec sum n1 = function
   Zero -> n1
-| Succ n2 -> sum (Suc n1) n2
+| Succ n2 -> sum (Succ n1) n2
 ;;
 
 let rec nat_of_int = function
@@ -884,9 +884,10 @@ let nat_of_int n =
 ;;
 *)
 
+(*
 let nat_of_int n =
   (* FUNCIÓN AUX *)
-  let rec nat_of_int n =
+  let rec nat_of_int n = function
       0 -> Zero
     | n -> Succ (nat_of_int (n-1))
   in
@@ -895,10 +896,11 @@ let nat_of_int n =
   else nat_of_int n (* LLAMADA A AUX *)
 
 ;;
+*)
 
 type 'a tree =
   Empty
-| None of ('a * 'a tree * 'a tree)
+| Node of ('a * 'a tree * 'a tree)
 ;;
 
 let rec num_nodes = function
@@ -942,10 +944,10 @@ type 'a tree =
 (* Tipo de árbol ESTRICTAMENTE binario, no puede haber un árbol con solo una hoja *)
 type 'a btree =
   Leaf of 'a
-| Node of 'a * 'a btrre * 'a btree
+| Node of 'a * 'a btree * 'a btree
 ;;
 
-let mirror = function
+let rec mirror = function
   Leaf x -> Leaf x
 | Node (x, l, r) -> Node (x, mirror r, mirror l)
 ;;
@@ -1018,6 +1020,7 @@ let fact n =
 
 (* EQUIVALENCIAS DEL PUNTO Y COMA *)
 
+(*
 e1 ; e2 ;;
 
 let _ = e1 in e2
@@ -1025,6 +1028,7 @@ let _ = e1 in e2
 e1 ; e2 ; e3 ;;
 
 let _ = e1 in let _ = e2 in e3
+*)
 
 let fac n =
   let f = ref 1 and
@@ -1053,7 +1057,7 @@ let vprod v1 v2 =
   if Array.length v1 = Array.length v2 then
     let p = ref 0. in
     for i = 0 to Array.length v1 do
-      p := !p + v1.(i) *. v2.(i)
+      p := !p +. v1.(i) *. v2.(i)
     done;
     !p
   else
