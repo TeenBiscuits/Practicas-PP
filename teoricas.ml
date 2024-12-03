@@ -1117,3 +1117,30 @@ let (:=) v x =
   v.contents <- x
 *)
 
+
+(* CLASES 3/12 *)
+
+(* ORIENTACIÓN A OBJETOS *)
+
+let c1 = object
+  val mutable n = 0
+  method next = n <- n + 1; n
+  method reset = n <- 0
+end;;
+
+let double_next c =
+  c#next * 2
+;;
+
+let double c = object
+  method next = c#next * 2
+  method reset = c#reset
+end;;
+
+
+class counter = object
+  val mutable n = 0
+  method next = n <- n+1; n
+  method reset = n <- 0
+end;;
+
