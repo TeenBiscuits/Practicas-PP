@@ -30,7 +30,7 @@ let rec rem x y =
 let rec div x y =
   if x < y then (0, x)
   else
-    let p = div (x-y) y in 
+    let p = div (x-y) y in
     (1+fst)
 *)
 
@@ -47,7 +47,7 @@ let rec div x y =
 let rec fib n = (* n >= 1 *)
   if n <= 2 then 1
   else fib (n-1) + fib (n-2);;
-  
+
 let crono f x =
   let t = Sys.time () in
   let _ = f x in
@@ -67,7 +67,7 @@ List.rev l;; (* Devuelve ['u'; 'o'; 'i'; 'e'; 'a'] *)
 
 let rec lenght l =
   if l = [] then 0
-  else 1 + List.length (List.tl l) 
+  else 1 + List.length (List.tl l)
   (* Con cada ejecución se acumula un 1 + (llamada recursiva) *)
   (* Con un array lo suficientemente larga podría agotarse el stack *)
 ;;
@@ -107,7 +107,7 @@ List.length [1;2;3;4];; (* 4 *)
 (* Creación de listas *)
 List.init 10 abs;; (* [0; 1; 2; 3; 4; 5; 6; 7; 8; 9] *)
 
-let l2 = List.init 50_000_000 abs;; 
+let l2 = List.init 50_000_000 abs;;
 
 List.hd (List.rev l2);; (* 49999999 *)
 
@@ -141,7 +141,7 @@ let rec last l =
 3 :: 7 :: 9 :: [];; (* [3; 7; 9] *)
 
 let hd = function
-  [] -> 2/0 
+  [] -> 2/0
 | h::_ -> h
 ;;
 
@@ -159,7 +159,7 @@ let hd = function
 (* CREAR UNA VERSIÓN TERMINAL DE LA SIGUIENTE FUNCIÓN *)
 
 let rec lenght = function
-  [] -> 0 
+  [] -> 0
 | _::t -> 1 + lenght t
 ;;
 
@@ -197,7 +197,7 @@ let rec find p = function
 
 let rec filter p = function
   [] -> []
-| h::t -> 
+| h::t ->
   if p h then h :: filter p t
   else filter p t
 ;;
@@ -220,7 +220,7 @@ let lenght l =
   let rec aux = function
     (n,[]) -> n
   | (n, _::t) -> aux(n+1,t)
-  in 
+  in
     aux (0,l)
 ;;
 
@@ -364,13 +364,13 @@ let rev l =
 ;;
 
 let rev l =
-  List.fold_left 
+  List.fold_left
     (function a -> function x -> x::a) [] l
 ;;
 
 (* ESTA ES LA UTILIDAD DE FUN *)
 let rev l =
-  List.fold_left 
+  List.fold_left
     (fun a x -> x::a) [] l
 ;;
 
@@ -431,7 +431,7 @@ let insert' x l =
 
   in
     aux ([], l)
-;; 
+;;
 
 let rec i_sort = function
   []-> []
@@ -483,7 +483,7 @@ let rec insert x = function
 
 let rec insert_g ord x = function
   [] -> [x]
-| h::t -> 
+| h::t ->
     if ord x h then x::h::t
     else h :: insert_g ord x t
 ;;
@@ -501,9 +501,9 @@ let rec isort_g ord = function
 (*
 # isort_g (<=) [22; 3; 14; 0; -2; 8; 0; 7; 3; 5];;
 - : int list = [-2; 0; 0; 3; 3; 5; 7; 8; 14; 22]
-# isort_g (>=) [22; 3; 14; 0; -2; 8; 0; 7; 3; 5];; 
+# isort_g (>=) [22; 3; 14; 0; -2; 8; 0; 7; 3; 5];;
 - : int list = [22; 14; 8; 7; 5; 3; 3; 0; 0; -2]
-# isort_g (=) [22; 3; 14; 0; -2; 8; 0; 7; 3; 5];;  
+# isort_g (=) [22; 3; 14; 0; -2; 8; 0; 7; 3; 5];;
 - : int list = [5; 3; 3; 7; 0; 0; 8; -2; 14; 22]
 *)
 
@@ -526,7 +526,7 @@ let rec fusion l1 l2 =
   then h1 :: fusion t1 l2 (* h2::t2 == l2 *)
   else h2 :: fusion l1 t2
 ;;
- 
+
 (*
 let rec fusion_g ord l1 l2 =
   match l1, l2 with
@@ -553,7 +553,7 @@ let rec merge_sort l =
       fusion (merge_sort l1) (merge_sort l2)
 ;;
 
-let rlist n = 
+let rlist n =
   List.init n (function _ -> Random.int 1_000_000)
 ;;
 
@@ -580,7 +580,7 @@ let divide' l =
     | h1::h2::t ->
       aux (h1::acc1) (h2::acc2) t (* Añadir a los acumuladores los dos primeros elementos de la lista *)
   in
-  aux [] [] l 
+  aux [] [] l
 ;;
 
 
@@ -591,7 +591,7 @@ let rec fusion l1 l2 =
       if h1 <= h2
         then h1 :: fusion t1 l2
         else h2 :: fusion l1 t2
-;; 
+;;
 
 
 let fusion' l1 l2 =
@@ -632,7 +632,7 @@ Some 'a
 let (//) m n =
   if n <> 0
   then Some (m / n)
-  else None 
+  else None
 ;;
 
 let come (i1, j1) (i2, j2) =
@@ -651,24 +651,24 @@ let reinas n =
       if i > n then Some camino         (* Salí fuera del tablero filas, es decir terminé *)
       else if j > n then None           (* Salí fuera del tablero columnas, estado de bloqueo *)
       else if compatible (i,j) camino   (* ¿ Es la posición encontrada válida ?  *)
-        
+
         (* Si, devuelvo las demás        )
         (  reinas y la nueva, avanzamos  )
         (  a la siguiente fila          *)
-        
+
         then
           match completa ((i,j)::camino) (i+1, 1) with
             None -> completa camino (i, j+1)
           | solucion -> solucion
-        (*| Some sol -> Some sol *) 
-        
+        (*| Some sol -> Some sol *)
+
         (* No, y continuamos a la        )
         (  siguiente columna            *)
-        
+
         else completa camino (i, j+1)
   in
     completa [] (1,1)
-;; 
+;;
 
 
 (*
@@ -707,7 +707,7 @@ let reinas n =
             None -> completa camino (i, j+1)
           | solucion -> solucion
           *)
-          try completa ((i, j) :: camino) (i+1, 1) with 
+          try completa ((i, j) :: camino) (i+1, 1) with
             Not_found -> completa camino (i, j+1)
       else completa camino (i, j+1)
   in
@@ -721,7 +721,7 @@ let reinas n =
       else if j > n then []
       else if compatible (i,j) camino
         then
-          match completa ((i, j) :: camino) (i+1, 1) with 
+          match completa ((i, j) :: camino) (i+1, 1) with
             [] -> completa camino (i, j+1)
           | sol -> sol
       else completa camino (i, j+1)
@@ -752,7 +752,7 @@ let all_reinas n =
 (* Contador de soluciones
 
 all_reinas 4;;
-- : (int * int) list list = 
+- : (int * int) list list =
 [[(4, 3); (3, 1); (2, 4); (1, 2)]; [(4, 2); (3, 4); (2, 1); (1, 3)]]
 
 all_reinas 5;;
@@ -779,15 +779,15 @@ let all_reinas n =
 (* ÁRBOLES *)
 
 type maybe_an_int =
-	Some of int 
+	Some of int
 	| None
 ;;
 
-let (//) x y = 
-	match x, y with 
+let (//) x y =
+	match x, y with
 	Some _, Some 0 -> None
 	| Some a, Some b -> Some (a/b)
-	| _ -> None 
+	| _ -> None
 ;;
 
 (*Definir un tipo booleano*)
@@ -795,57 +795,57 @@ type booleano = V | F;;
 
 (*Se utiliza con pattern matching*)
 let (&&&) b1 b2 =
-  match b1, b2 with 
+  match b1, b2 with
     V, V -> V
     | _ -> F
 ;;
 
-let (|||) b1 b2 = 
-  match b1, b2 with 
-  V, _ | _, V -> V        
+let (|||) b1 b2 =
+  match b1, b2 with
+  V, _ | _, V -> V
   | _ -> F
 ;;
 
 
-type palo = 
-  Pica 
-  | Trebol 
-  | Corazon 
+type palo =
+  Pica
+  | Trebol
+  | Corazon
   | Diamante
 ;;
 
 
 type numero =
-  I of int 
+  I of int
 | F of float
 ;;
 
-let rec (++) n1 n2 = 
-  match n1, n2 with 
+let rec (++) n1 n2 =
+  match n1, n2 with
   I x, I y -> I (x + y)
 | F x, F y -> F (x +. y)
 | I x, F y -> F (float x +. y)
 | _ -> n2 ++ n1
 ;;
 
-type maybe_an_int = 
-   Some of int 
+type maybe_an_int =
+   Some of int
  | None
 ;;
 
 (* PREGUNTAR POR ESTE ERROR *)
 type maybe_a_string =
-  Somes of string 
+  Somes of string
 | Nones
 ;;
 
 type 'a option =
-  Some of 'a 
-| None 
-;; 
+  Some of 'a
+| None
+;;
 
-type nat = 
-  Zero 
+type nat =
+  Zero
 | Succ of nat     (* Succ: sucesor *)
 ;;
 
@@ -865,7 +865,7 @@ let rec sum n1 = function
 
 let rec nat_of_int = function
   0 -> Zero
-| n -> 
+| n ->
     if n < 0 then raise (Invalid_argument "nat_of_int")
     else Succ (nat_of_int (n-1))
 ;;
@@ -958,8 +958,8 @@ type 'a gtree =
 
 let rec num_nodes = function
   GT (_, []) -> 1
-| GT (_, l) -> 
-        List.fold_left (+) 1 (List.map num_nodes l) 
+| GT (_, l) ->
+        List.fold_left (+) 1 (List.map num_nodes l)
         (* Suma todos los elementos de la lista, mas el nodo padre *)
 ;;
 
@@ -967,7 +967,7 @@ let rec num_nodes = function
 (* Suma todos los elementos de la lista, mas el nodo padre *)
 let rec num_nodes (GT (_, l)) = List.fold_left (+) 1 (List.map num_nodes l);;
 
-let rec num_nodes' = function 
+let rec num_nodes' = function
   GT (_, []) -> 1
 | GT (x, h::t) -> num_nodes' h + num_nodes' (GT (x, t))
 ;;
@@ -1075,3 +1075,45 @@ let m =
     [| 7; 8; 9; 10 |];
   |]
 ;;
+
+(* CLASES 2/12 *)
+
+type persona = { nombre : string ; edad : int } ;;
+
+type persona = {
+    nombre : string;
+    mutable edad : int
+}
+
+let envejece p = p.edad <- p.edad +1;;
+
+let mas_vieja p =
+  { nombre = p.nombre; edad = p.edad + 1}
+;;
+
+let mas_vieja p =
+  { p with edad = p.edad + 1}
+;;
+
+let envejece p =
+  p.edad <- p.edad + 1
+;;
+
+type 'a ref =
+  { mutable contents : 'a}
+
+(*
+let ref x =
+  { mutable contents : 'a}
+
+
+let ref x =
+  {contens = x}
+
+let (!) v =
+  v.contents
+
+let (:=) v x =
+  v.contents <- x
+*)
+
