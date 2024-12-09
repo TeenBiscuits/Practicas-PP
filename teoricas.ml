@@ -96,7 +96,7 @@ List.for_all ((<) 0) [1;2;3];; (* True *)
 
 (* El primero que encuentra lo devuelve *)
 List.find ((<) 0) [-1;2;3];; (* 2 *)
-List.find ((<) 0) [-1;-2;-3];; (* Exception: Not_found *)
+(* List.find ((<) 0) [-1;-2;-3];; (* Exception: Not_found *) *)
 
 (* ¿Es miembro? *)
 List.mem 2 [1;2;3];; (* True *)
@@ -1142,5 +1142,66 @@ class counter = object
   val mutable n = 0
   method next = n <- n+1; n
   method reset = n <- 0
+end;;
+
+(* CLASES 09/12 *)
+
+let double_next o = 
+  o#next * 2
+;;
+
+let c1 = object
+  val mutable n = 0
+  method next = n <- n + 1; n
+  method reset = n <- 0
+end;;
+
+class counter = object
+  val mutable n = 0
+  method next = n <- n+1; n
+  method reset = n <- 0
+end;;
+
+type counter = < next : int; reset : unit >
+
+let new_counter () : counter = object
+  val mutable n = 0
+  method next = n <- n+1; n
+  method reset = n <- 0
+end;;
+
+let c3 = new_counter ()
+
+class counter_with_set = object
+  inherit counter
+  method set x = n <- x
+end;;
+
+class counter_with_set_add_init n0 = object (self)
+  inherit counter_with_set
+  initializer self#set n0
+end;;
+
+(*
+class counter_with_limit n0 max = object (this)
+  inherit counter_with_set_add_init n0 as ancestor
+  method next =
+    let n = ancestor#next in
+    if n <= max then n
+    else (this#reset; ancestor#reset) (* MAL COPIADO ESTA LINEA NO COMPILA *)
+end;;
+*)
+
+class counter_with_set_and_init n0 = object (self)
+  inherit counter_with_set
+  initializer self#set n0
+end;;
+
+class counter_with_limit n0 max = object (this)
+  inherit counter_with_set_and_init n0 as ancestor
+  method next =
+    let n = ancestor#next in
+    if n <= max then n
+    else (this#reset; ancestor#next)
 end;;
 
