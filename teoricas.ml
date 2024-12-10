@@ -1205,3 +1205,31 @@ class counter_with_limit n0 max = object (this)
     else (this#reset; ancestor#next)
 end;;
 
+(* CLASES 10/12 *)
+
+class ['a] queue = object (self)
+  val mutable front = []
+  val mutable back = []
+  method push (e : 'a) =
+    back <- e :: back
+  method top =
+    match front, back with
+      h::_, _ -> Some h
+    | [], [] -> None
+    | [], _ ->  front <- List.rev back;
+                back  <- [];
+                self#top
+  method pop =
+    match front, back with
+      h::t, _ -> front <- t; Some h
+    | [], [] -> None
+    | [], _ ->  front <- List.rev back;
+                back  <- [];
+                self#pop
+end;;
+
+class ['a] queue' = object (self)
+  inherit ['a] queue
+  method copy = Oo.copy self
+end;;
+
