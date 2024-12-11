@@ -51,6 +51,23 @@ ocamlc -c test.mli test.ml
   - [ ] hanoi_plus.ml
   - [ ] tail.ml (Opcional)
 
+- [ ] [P10 - Práctica 10](/P10/)
+  - [ ] galopada.ml
+  - [ ] lazy_queen.ml (Opcional)
+- [ ] [P11 - Práctica 11](/P11/)
+  - [ ] binTree.ml
+  - [ ] stBinTree.ml
+  - [ ] gTree.ml
+- [ ] [P12 - Práctica 12 (Opcional)](/P12/)
+  - [ ] binSubTrees.ml
+
+- [ ] [P13 - Práctica 13](/P13/)
+  - [ ] [E1 - Dijkstra](/P13/E1/)
+    - [ ] dijkstra.ml
+  - [ ] [E2 - Un Mundo Imperativo (Opcional)](/P13/E2/)
+    - [ ] list_loop.ml 
+    - [ ] array_loop.ml
+
 ## Pruebas Competitivas
 
 - [ ] [PC1 - Más Hanoi](/PC1/)
