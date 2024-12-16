@@ -1233,3 +1233,25 @@ class ['a] queue' = object (self)
   method copy = Oo.copy self
 end;;
 
+(* CLASES 16/12 *)
+
+let _ = print_char 'A' in
+let _ = print_char 'B' in
+print_char 'C'
+;;
+
+let rec output_string_list c = function
+    [] -> ()
+  | h::t ->
+    output_string c (h ^ "\n");
+    output_string_list c t
+;;
+
+let rec input_string_list c =
+  try
+    let s = input_line c in s :: input_string_list c
+  with
+    End_of_file -> []
+;;
+
+
