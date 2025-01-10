@@ -72,3 +72,5 @@ ocamlc -c test.mli test.ml
 
 - [ ] [PC1 - Más Hanoi](/PC1/)
   - [ ] [hanoi_plus.ml](/PC1/hanoi_plus.ml)
+- [ ] [PC2 - Solo Chess](/PC2/)
+  - [ ] solo.ml
