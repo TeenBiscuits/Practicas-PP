@@ -32,7 +32,7 @@ Prácticas de la asignatura Paradigmas de la Programación en OCaml
     - [ ] fibto.ml
     - [ ] fast_fibto.ml
 - [x] [P5 - "101"](/P05/)
-  - [x] [binarystr.ml (**Optimizar**)](/P05/binarystr.ml)
+  - [x] [binarystr.ml](/P05/binarystr.ml)
 - [ ] [P6](/P06/)
   - [x] [E1 - MCM (Opcional)](/P06/E1/)
     - [x] mcm.ml
