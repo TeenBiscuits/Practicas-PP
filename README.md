@@ -2,6 +2,9 @@
 
 Prácticas de la asignatura Paradigmas de la Programación en OCaml
 
+> [!NOTE]
+> No todas las prácticas están perfectas ni mucho menos, muchas no fueron ni entregadas a tiempo. **Úsalas bajo tu propio riesgo.**
+
 > No es mucho, pero es trabajo honesto
 
 - [x] [P1 - Práctica 1](/P01/)
