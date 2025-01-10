@@ -55,7 +55,7 @@ ocamlc -c test.mli test.ml
   - [ ] galopada.ml
   - [ ] lazy_queen.ml (Opcional)
 - [ ] [P11 - Práctica 11](/P11/)
-  - [ ] binTree.ml
+  - [x] [binTree.ml](/P11/binTree.ml)
   - [ ] stBinTree.ml
   - [ ] gTree.ml
 - [ ] [P12 - Práctica 12 (Opcional)](/P12/)
