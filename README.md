@@ -1,10 +1,8 @@
 # Practicas-PP
 
-Prácticas de Paradigmas de la Programación en OCaml
+Prácticas de la asignatura Paradigmas de la Programación en OCaml
 
-```shell
-ocamlc -c test.mli test.ml
-```
+> No es mucho, pero es trabajo honesto
 
 - [x] [P1 - Práctica 1](/P01/)
   - [x] [nombre.ml](/P01/nombre.ml)
