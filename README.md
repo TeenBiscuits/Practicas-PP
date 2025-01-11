@@ -57,7 +57,7 @@ Prácticas de la asignatura Paradigmas de la Programación en OCaml
   - [ ] lazy_queen.ml (Opcional)
 - [ ] [P11 - Práctica 11](/P11/)
   - [x] [binTree.ml](/P11/binTree.ml)
-  - [ ] stBinTree.ml
+  - [x] [stBinTree.ml](/P11/stBinTree.ml)
   - [ ] gTree.ml
 - [ ] [P12 - Práctica 12 (Opcional)](/P12/)
   - [ ] binSubTrees.ml
