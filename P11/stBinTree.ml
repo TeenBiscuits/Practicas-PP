@@ -1,156 +1,152 @@
-(* NOTA: 10 *)
 type 'a st_bintree =
-	Leaf of 'a
-	| SBT of 'a st_bintree * 'a * 'a st_bintree;;
+  Leaf of 'a
+| SBT of 'a st_bintree * 'a * 'a st_bintree
 
-type 'a t = 'a st_bintree;;
+type 'a t = 'a st_bintree
 
-let leaftree x = Leaf x;;
+let leaftree x = Leaf x
 
 let is_leaf = function
-	Leaf _ -> true
-	| SBT(_, _, _) -> false;;
+  Leaf x -> true
+| _ -> false
 
-let comb x l r = SBT (l, x, r);;
+let comb x l r =
+  SBT (l, x, r)
+(* comb x l r devuelve el árbol con raíz x, rama izda l y rama decha r *)
 
 let root = function
-	Leaf x -> x
-	| SBT (_, x, _) -> x;;
+  Leaf x -> x
+| SBT (_, x, _) -> x
 
 let left_b = function
-	Leaf _ -> failwith "left_b"
-	| SBT (izq, _, _) -> izq;;
+  Leaf _ -> raise (Failure "left_b")
+| SBT (l, _, _) -> l
 
 let right_b = function
-	Leaf _ -> failwith "right_b"
-	| SBT (_, _, der) -> der;;
+  Leaf _ -> raise (Failure "right_b")
+|  SBT (_, _, r) -> r
 
-let root_replacement tree x =
-	match tree with
-	Leaf _ -> Leaf x
-	| SBT (izq, _, der) -> SBT (izq, x, der);;
-	
-let left_replacement tree izq =
-	match tree with
-	Leaf _ -> failwith "left_replacement"
-	| SBT (_, x, der) -> SBT (izq, x, der);;
-	
-let right_replacement tree der =
-	match tree with
-	Leaf _ -> failwith "left_replacement"
-	| SBT (izq, x, _) -> SBT (izq, x, der);;
+let root_replacement t x =
+  match t with
+    Leaf _ -> raise (Failure "root_replacement")
+  | SBT (left, _, right) -> SBT (left, x, right)
+
+let left_replacement t l =
+  match t with
+    Leaf _  -> raise (Failure "left_replacement")
+  | SBT (_, root, right) -> SBT (l, root, right)
+
+let right_replacement t r =
+match t with
+  Leaf _ -> raise (Failure "right_replacement")
+| SBT (left, root, _) -> SBT (left, root, r)
 
 let rec size = function
-	Leaf x -> 1
-	| SBT (izq, _, der) -> 1 + size izq + size der;;
-	
+  Leaf _ -> 1
+| SBT (left, _, right) -> 1 + size left + size right
+
 let rec height = function
-	Leaf x -> 1
-	| SBT (izq, _, der) -> 1 + max(height izq) (height der);;
+  Leaf _ -> 1
+| SBT (left, _, right) -> 1 + max (height left) (height right)
+(* altura como número de niveles; 1 si tiene solo un nodo *)
 
 
 let rec preorder = function
-	Leaf x -> [x]
-	| SBT (izq, x, der) -> x :: (preorder izq @ preorder der);;
+  Leaf x -> [x]
+| SBT (left, root, right) -> [root] @ preorder left @ preorder right
+(* primero la raíz *)
 
 let rec inorder = function
-	Leaf x -> [x]
-	| SBT (izq, x, der) -> inorder izq @ (x :: inorder der);;
+  Leaf x -> [x]
+| SBT (left, root, right) -> inorder left @ [root] @ inorder right
+(* la raíz entre las ramas *)
 
 let rec postorder = function
-	Leaf x -> [x]
-	| SBT (izq, x, der) -> postorder izq @ postorder der @ [x];;
+  Leaf x -> [x]
+| SBT (left, root, right) -> postorder left @ postorder right @ [root]
+(* la raíz al final *)
 
-
-let breadth tree =
-	let rec aux cola acc =
-		match cola with
-		[] -> List.rev acc
-		| Leaf x :: l -> aux l (x :: acc)
-		| SBT (izq, x, der) :: l -> aux (l @ [izq; der]) (x :: acc)
-	in
-	aux [tree] [];;
+let breadth a =
+  let rec aux = function
+      [] -> []
+    | Leaf x ::t -> x :: aux t
+    | SBT (l,x,r) :: t -> x :: aux (t @ [l;r]) (* ineficiente *)
+  in aux [a]
 
 let rec leaves = function
-	Leaf x -> [x]
-	| SBT (izq, _, der) -> leaves izq @ leaves der;;
+  Leaf x -> [x] 
+| SBT (l, _,r) -> leaves l @ leaves r
+(* lista de hojas de izda a decha *)
 
+let find_in_depth p t =
+  let rec aux = function
+    [] -> raise Not_found
+  | Leaf x::t -> if p x then x else aux t
+  | SBT (l,x,r) :: t -> if p x then x else aux ([l] @ [r] @ t)
+  in 
+    aux [t]
+(* busca en profundidad (priorizando las ramas izquierdas)
+   un nodo que satisfaga el predicado.
+   Raises Not_found if not found *)
 
-let rec find_in_depth f tree =
-	match tree with
-	Leaf x -> 
-		if f x then x
-		else raise Not_found
-		| SBT (left, x, right) ->
-			if f x then x
-			else
-			try find_in_depth f left
-			with Not_found -> find_in_depth f right;;
+let find_in_depth_opt p t =
+  let rec aux = function
+    [] -> None
+  | Leaf x::t -> if p x then Some x else aux t
+  | SBT (l,x,r) :: t -> if p x then Some x else aux ([l] @ [r] @ t)
+  in 
+    aux [t]
 
-let rec find_in_depth_opt f tree =
-	match tree with
-	Leaf x -> 
-		if f x then Some x
-		else None
-	| SBT (left, x, right) ->
-		if f x then Some x
-		else
-		match find_in_depth_opt f left with
-		Some value -> Some value
-		| None -> find_in_depth_opt f right;;
+let exists p t =
+  let rec aux = function
+    [] -> false
+  | Leaf x::t -> if p x then true else aux t
+  | SBT (l,x,r) :: t -> if p x then true else aux ([l] @ [r] @ t)
+  in 
+    aux [t]
 
-let rec for_all f = function
-	Leaf x -> f x
-	| SBT (izq, raiz, der) ->
-		f raiz && for_all f izq && for_all f der;;
+let for_all p t =
+  let rec aux = function
+    [] -> true
+  | Leaf x::t -> if p x then aux t else false
+  | SBT (l,x,r) :: t -> if p x then aux ([l] @ [r] @ t) else false
+  in 
+    aux [t]
 
-let rec exists f = function
-	Leaf x -> f x
-	| SBT (izq, raiz, der) ->
-		f raiz || exists f izq || exists f der;;
-
-let rec map f tree =
-	match tree with
-	Leaf x -> Leaf (f x)
-	| SBT (izq, x, der) -> SBT (map f izq, f x, map f der);;
-
+let rec map p = function 
+  Leaf x -> Leaf (p x)
+| SBT (l,x,r) -> SBT (map p l, p x, map p r)
+;;
 
 let rec mirror = function
-	Leaf x -> Leaf x
-	| SBT (izq, raiz, der) -> SBT (mirror der, raiz, mirror izq);;
+  Leaf x -> Leaf x
+| SBT (l,x,r) -> SBT (mirror r, x, mirror l)
+;;
 
+let rec replace_when p t r =
+  match t with
+    Leaf x -> if p x then r else Leaf x
+  | SBT (left,x,right) -> if p x then r else SBT (replace_when p left r,x, replace_when p right r)
+(* replace_when p t r es un árbol como el t, pero en el que se han reemplazado
+   los nodos que satisfacen p (con todos sus descendientes) por el árbol r *)
 
-let rec replace_when f t r =
-	match t with
-	Leaf x ->
-		if f x then r else t
-	| SBT (left, x, right) ->
-		if f x then r
-		else SBT (replace_when f left r, x, replace_when f right r);;
+let rec cut_below p t =
+  match t with
+    Leaf x -> Leaf x
+  | SBT (left,x,right) -> if p x then Leaf x else SBT (cut_below p left,x, cut_below p right) 
+(*
+val cut_below : ('a -> bool) -> 'a t -> 'a t 
+(* "corta" el árbol por debajo (si la raíz está en la cima)
+   de cualquier nodo que satisfaga el predicado *)
+*)
 
-
-let rec cut_above f = function
-	Leaf x -> Leaf x
-	| SBT (izq, x, der) ->
-		if f x then Leaf (f x)
-		else SBT (cut_above f izq, x, cut_above f der);;
-
-let rec cut_below f = function
-  | Leaf x -> Leaf x
-  | SBT (left, x, right) ->
-      if f x then Leaf x
-      else SBT (cut_below f left, x, cut_below f right);;
-
-
-let rec to_bin tree =
-	match tree with
-	Leaf x -> BinTree.leaftree x
-	| SBT (izq, raiz, der) -> BinTree.right_replacement (BinTree.left_replacement (BinTree.leaftree raiz) (to_bin izq)) (to_bin der);;
+let rec to_bin = function
+  Leaf x -> BinTree.leaftree x
+| SBT(left,x,right) -> BinTree.right_replacement ( BinTree.left_replacement (BinTree.leaftree x) (to_bin left)) (to_bin right)
 
 let rec from_bin t =
 	if BinTree.is_empty t then raise (Failure "from_bin")
-	else match (BinTree.is_empty (BinTree.left_b t), BinTree.is_empty (BinTree.right_b t) )
-		with
+	else match (BinTree.is_empty (BinTree.left_b t), BinTree.is_empty (BinTree.right_b t) ) with
 		(true, true) -> Leaf (BinTree.root t)
 		| (false, false) -> SBT (from_bin (BinTree.left_b t), BinTree.root t, from_bin (BinTree.right_b t))
 		| (_, _) -> raise (Failure "from_bin");;

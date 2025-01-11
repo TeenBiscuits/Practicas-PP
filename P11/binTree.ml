@@ -24,14 +24,12 @@ let root = function
 
 let left_b = function
   Empty -> raise (Failure "left_b") 
-| BT (Empty, _, _) -> raise (Failure "left_b")
 | BT (left, _, _) -> left
 (* rama izda. 
    raises Failure "left_b" if is empty *)
 
 let right_b = function
   Empty -> raise (Failure "right_b") 
-| BT (_, _, Empty) -> raise (Failure "right_b")
 | BT (_, _, right) -> right
 (* rama decha 
    raises Failure "right_b" if is empty *)
