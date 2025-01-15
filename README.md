@@ -1,6 +1,6 @@
 # Practicas-PP
 
-Prácticas de la asignatura Paradigmas de la Programación en OCaml
+Prácticas de la asignatura Paradigmas de la Programación en OCaml. Curso 2024/2025.
 
 > [!NOTE]
 > No todas las prácticas están perfectas ni mucho menos, muchas no fueron ni entregadas a tiempo. **Úsalas bajo tu propio riesgo.**
